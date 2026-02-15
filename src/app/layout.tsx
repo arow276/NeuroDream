@@ -16,6 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen">
         <div className="starfield" />
+        <div className="aurora-bg" />
         <div className="relative z-10">{children}</div>
       </body>
     </html>

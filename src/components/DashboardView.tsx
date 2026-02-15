@@ -9,7 +9,6 @@ import {
   Zap,
   Eye,
   Heart,
-  Plus,
   ArrowRight,
   Sparkles,
   Brain,
@@ -54,32 +53,29 @@ export default function DashboardView({
   }
 
   const recentDreams = dreams.slice(0, 10);
-  const hasInterpretations = dreams.some((d) => d.interpretation);
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
       {/* Welcome section */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-2xl font-display font-semibold text-[var(--text-primary)]">
-            Your Dream Journal
-          </h2>
-          <p className="text-[var(--text-secondary)] mt-1">
-            {dreams.length} dream{dreams.length !== 1 ? "s" : ""} recorded
-            {dreams.length >= 3 && " — patterns are emerging"}
-          </p>
-        </div>
+      <div>
+        <h2 className="text-xl sm:text-2xl font-display font-semibold text-[var(--text-primary)]">
+          Your Dream Journal
+        </h2>
+        <p className="text-sm text-[var(--text-secondary)] mt-1">
+          {dreams.length} dream{dreams.length !== 1 ? "s" : ""} recorded
+          {dreams.length >= 3 && " — patterns are emerging"}
+        </p>
       </div>
 
       {/* Quick stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 gap-3">
         <StatCard
           label="Total Dreams"
           value={dreams.length.toString()}
           icon={<Moon size={16} className="text-dream-400" />}
         />
         <StatCard
-          label="Avg Sleep Quality"
+          label="Avg Sleep"
           value={
             (
               dreams.reduce((s, d) => s + d.sleepQuality, 0) / dreams.length
@@ -93,7 +89,7 @@ export default function DashboardView({
           icon={<Eye size={16} className="text-blue-400" />}
         />
         <StatCard
-          label="Wellness Actions"
+          label="Wellness Done"
           value={dreams
             .reduce(
               (s, d) =>
@@ -107,7 +103,7 @@ export default function DashboardView({
 
       {/* Recent dreams */}
       <div>
-        <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+        <h3 className="text-base sm:text-lg font-semibold text-[var(--text-primary)] mb-3 sm:mb-4 flex items-center gap-2">
           <BookOpen size={18} className="text-dream-400" />
           Recent Dreams
         </h3>
@@ -136,14 +132,14 @@ function StatCard({
   icon: React.ReactNode;
 }) {
   return (
-    <div className="card p-4">
-      <div className="flex items-center gap-2 mb-2">
+    <div className="card p-3 sm:p-4">
+      <div className="flex items-center gap-2 mb-1.5 sm:mb-2">
         {icon}
-        <span className="text-xs text-[var(--text-muted)] uppercase tracking-wider">
+        <span className="text-[10px] sm:text-xs text-[var(--text-muted)] uppercase tracking-wider">
           {label}
         </span>
       </div>
-      <p className="text-2xl font-semibold text-[var(--text-primary)]">
+      <p className="text-xl sm:text-2xl font-semibold text-[var(--text-primary)]">
         {value}
       </p>
     </div>
@@ -162,12 +158,12 @@ function DreamCard({
   return (
     <button
       onClick={onClick}
-      className="card p-4 w-full text-left hover:bg-[var(--bg-card-hover)] transition-all group"
+      className="card p-3 sm:p-4 w-full text-left hover:bg-[var(--bg-card-hover)] transition-all group active:scale-[0.99]"
       style={{ animationDelay: `${index * 50}ms` }}
     >
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex items-start justify-between gap-3 sm:gap-4">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-3 mb-1.5">
+          <div className="flex items-center gap-2 sm:gap-3 mb-1.5 flex-wrap">
             <span className="text-xs text-[var(--text-muted)]">
               {formatDreamDate(dream.date)}
             </span>
@@ -178,37 +174,37 @@ function DreamCard({
               {dream.valence}
             </span>
             {dream.lucidity !== "none" && (
-              <span className="tag-blue tag text-[10px]">
+              <span className="tag-blue tag text-[10px] !py-0.5 !px-2 !min-h-0">
                 <Eye size={10} />
                 {dream.lucidity === "full" ? "Lucid" : "Semi-Lucid"}
               </span>
             )}
             {dream.isRecurring && (
-              <span className="tag-amber tag text-[10px]">Recurring</span>
+              <span className="tag-amber tag text-[10px] !py-0.5 !px-2 !min-h-0">Recurring</span>
             )}
           </div>
 
-          <h4 className="font-semibold text-[var(--text-primary)] group-hover:text-dream-300 transition-colors truncate">
+          <h4 className="font-semibold text-sm sm:text-base text-[var(--text-primary)] group-hover:text-dream-300 transition-colors truncate">
             {dream.title}
           </h4>
 
-          <p className="text-sm text-[var(--text-secondary)] mt-1 line-clamp-2">
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] mt-1 line-clamp-2">
             {dream.narrative}
           </p>
 
-          <div className="flex items-center gap-2 mt-2 flex-wrap">
+          <div className="flex items-center gap-1.5 sm:gap-2 mt-2 flex-wrap">
             {dream.emotions.slice(0, 3).map((emotion) => (
-              <span key={emotion} className="tag text-[10px]">
+              <span key={emotion} className="tag text-[10px] !py-0.5 !px-2 !min-h-0">
                 {emotion}
               </span>
             ))}
             {dream.themes.slice(0, 2).map((theme) => (
-              <span key={theme} className="tag tag-green text-[10px]">
+              <span key={theme} className="tag tag-green text-[10px] !py-0.5 !px-2 !min-h-0">
                 {theme}
               </span>
             ))}
             {dream.interpretation && (
-              <span className="tag tag-blue text-[10px]">
+              <span className="tag tag-blue text-[10px] !py-0.5 !px-2 !min-h-0">
                 <Brain size={10} />
                 Interpreted
               </span>
@@ -243,29 +239,30 @@ function DreamCard({
 
 function EmptyState({ onNewDream }: { onNewDream: () => void }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] animate-fade-in">
-      <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-dream-500/20 to-dream-700/20 border border-dream-500/30 flex items-center justify-center mb-6">
-        <Moon size={36} className="text-dream-400" />
+    <div className="flex flex-col items-center justify-center min-h-[50vh] sm:min-h-[60vh] animate-fade-in px-4">
+      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-dream-500/20 to-dream-700/20 border border-dream-500/30 flex items-center justify-center mb-5 sm:mb-6 animate-float animate-pulse-glow">
+        <Moon size={28} className="text-dream-400 sm:hidden" />
+        <Moon size={36} className="text-dream-400 hidden sm:block" />
       </div>
 
-      <h2 className="text-2xl font-display font-semibold text-[var(--text-primary)] mb-2">
+      <h2 className="text-xl sm:text-2xl font-display font-semibold text-[var(--text-primary)] mb-2 text-center">
         Welcome to NeuroDream
       </h2>
-      <p className="text-[var(--text-secondary)] text-center max-w-md mb-2">
+      <p className="text-sm sm:text-base text-[var(--text-secondary)] text-center max-w-md mb-2">
         Your dream wellness journal — where neuroscience meets dream
         interpretation to enhance your waking life.
       </p>
-      <p className="text-[var(--text-muted)] text-sm text-center max-w-sm mb-8">
+      <p className="text-xs sm:text-sm text-[var(--text-muted)] text-center max-w-sm mb-6 sm:mb-8">
         Record your dreams, receive context-aware interpretations backed by
         neuroscience, and discover actionable wellness insights.
       </p>
 
-      <button onClick={onNewDream} className="btn btn-primary text-base px-8 py-3">
+      <button onClick={onNewDream} className="btn btn-primary text-base px-6 sm:px-8 py-3">
         <PenLine size={18} />
         Record Your First Dream
       </button>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-12 max-w-2xl">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-8 sm:mt-12 max-w-2xl w-full">
         <FeatureCard
           icon={<Brain size={20} className="text-dream-400" />}
           title="Neuroscience-Backed"
