@@ -10,6 +10,7 @@ export const PLANS = {
     name: "Free",
     price: 0,
     priceId: null,
+    paymentLink: null,
     features: [
       "Up to 10 dream entries",
       "Basic dream journaling",
@@ -23,6 +24,7 @@ export const PLANS = {
     name: "Pro",
     price: 9.99,
     priceId: process.env.STRIPE_PRO_PRICE_ID,
+    paymentLink: "https://buy.stripe.com/cNi14oforgsqc58bNpfMA04",
     features: [
       "Unlimited dream entries",
       "AI-powered dream interpretation",
@@ -38,6 +40,7 @@ export const PLANS = {
     name: "Premium",
     price: 19.99,
     priceId: process.env.STRIPE_PREMIUM_PRICE_ID,
+    paymentLink: null,
     features: [
       "Everything in Pro",
       "Priority AI processing",

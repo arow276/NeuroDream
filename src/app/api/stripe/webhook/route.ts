@@ -29,7 +29,8 @@ export async function POST(request: Request) {
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session;
-      const userId = session.metadata?.supabase_user_id;
+      // Support both API checkout (metadata) and Payment Links (client_reference_id)
+      const userId = session.metadata?.supabase_user_id || session.client_reference_id;
       if (userId && session.subscription) {
         const subscription = await stripe.subscriptions.retrieve(
           session.subscription as string

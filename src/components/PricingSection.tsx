@@ -8,6 +8,7 @@ interface PricingSectionProps {
   currentPlan?: PlanKey;
   onSelectPlan?: (plan: PlanKey) => void;
   isLoggedIn?: boolean;
+  userId?: string;
   onAuthRequired?: () => void;
 }
 
@@ -15,6 +16,7 @@ export default function PricingSection({
   currentPlan = "free",
   onSelectPlan,
   isLoggedIn,
+  userId,
   onAuthRequired,
 }: PricingSectionProps) {
   const [loading, setLoading] = useState<PlanKey | null>(null);
@@ -26,7 +28,21 @@ export default function PricingSection({
       return;
     }
 
-    const priceId = PLANS[plan].priceId;
+    const planConfig = PLANS[plan];
+
+    // Use Stripe Payment Link if available (direct redirect, no API call needed)
+    if (planConfig.paymentLink) {
+      setLoading(plan);
+      const url = new URL(planConfig.paymentLink);
+      if (userId) {
+        url.searchParams.set("client_reference_id", userId);
+      }
+      window.location.href = url.toString();
+      return;
+    }
+
+    // Fallback to API-based checkout for plans without a payment link
+    const priceId = planConfig.priceId;
     if (!priceId) return;
 
     setLoading(plan);

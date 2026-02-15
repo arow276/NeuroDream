@@ -116,6 +116,7 @@ export default function Home() {
         <main className="max-w-6xl mx-auto w-full px-4 pb-safe">
           <PricingSection
             isLoggedIn={!!user}
+            userId={user?.id}
             onAuthRequired={() => window.location.href = "/auth/signup"}
           />
         </main>
